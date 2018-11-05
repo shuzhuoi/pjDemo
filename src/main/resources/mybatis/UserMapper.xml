@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.emgcy.core.system.sys.mapper.UserMapper">
+<mapper namespace="com.shuzhuo.core.system.sys.mapper.UserMapper">
 
 	<!-- 
 		  @author:buguangyi
@@ -8,7 +8,7 @@
 	 -->
 	 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.emgcy.core.system.sys.entity.User">
+	<resultMap id="BaseResultMap" type="com.shuzhuo.core.system.sys.entity.User">
 		<id column="id" property="id" />
 		<result column="uuid" property="uuid" />
 		<result column="org_hospital_id" property="orgHospitalId" />
@@ -186,7 +186,7 @@
         </if>
 	</sql>
 	
-	<select id="queryList" resultType="com.emgcy.core.system.sys.entity.User">
+	<select id="queryList" resultType="com.shuzhuo.core.system.sys.entity.User">
 		select u.*, 
 		(select d.name from sys_org d where d.id = u.org_hospital_id) hospitalName,
 		(select d.name from sys_org d where d.id = u.org_dept_id) deptName,
@@ -211,7 +211,7 @@
 	</select>
 	
 	<!-- 获取角色绑定的用户列表 -->
-	<select id="selectRoleUserList" resultType="com.emgcy.core.system.sys.entity.User">
+	<select id="selectRoleUserList" resultType="com.shuzhuo.core.system.sys.entity.User">
 		SELECT distinct u.*,
 		(select d.name from sys_org d where d.id = u.org_dept_id) deptName
 		FROM sys_user_role ur
@@ -220,7 +220,7 @@
 	</select>
 	
 	<!-- 获取未绑定的用户列表 -->
-	<select id="selectUnbindingRoleUserList" resultType="com.emgcy.core.system.sys.entity.User">
+	<select id="selectUnbindingRoleUserList" resultType="com.shuzhuo.core.system.sys.entity.User">
 		SELECT DISTINCT u.*,
 		(select d.name from sys_org d where d.id = u.org_dept_id) deptName
 		FROM sys_user u
@@ -245,7 +245,7 @@
 		AND rm.role_id=ur.role_id
 	</select>
 	
-	<select id="selectUserById" resultType="com.emgcy.core.system.sys.entity.User">
+	<select id="selectUserById" resultType="com.shuzhuo.core.system.sys.entity.User">
 		select u.*, 
 		(select d.name from sys_org d where d.id = u.org_dept_id) deptName
 		from sys_user u

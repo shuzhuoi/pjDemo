@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.emgcy.core.system.sys.mapper.RoleMapper">
+<mapper namespace="com.shuzhuo.core.system.sys.mapper.RoleMapper">
 
 	<!-- 
 		  @author:buguangyi
@@ -8,7 +8,7 @@
 	 -->
 	 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.emgcy.core.system.sys.entity.Role">
+	<resultMap id="BaseResultMap" type="com.shuzhuo.core.system.sys.entity.Role">
 		<id column="id" property="id" />
 		<result column="org_hospital_id" property="orgHospitalId" />
 		<result column="role_type" property="roleType" />
@@ -86,7 +86,7 @@
         </if>
 	</sql>
 
-	<select id="selectUserRole" resultType="com.emgcy.core.system.sys.entity.Role">
+	<select id="selectUserRole" resultType="com.shuzhuo.core.system.sys.entity.Role">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM sys_role r
@@ -96,7 +96,7 @@
 	</select>
 	
 	<!-- 获取角色绑定的用户列表 -->
-	<select id="selectUserRoleList" resultType="com.emgcy.core.system.sys.entity.Role">
+	<select id="selectUserRoleList" resultType="com.shuzhuo.core.system.sys.entity.Role">
 		SELECT r.*
 		FROM sys_user_role ur
 		LEFT JOIN sys_role r ON r.id = ur.role_id
@@ -130,7 +130,7 @@
 	</insert>
 
 	<!--获取角色列表-->
-	<select id="selectRoleList" resultType="com.emgcy.core.system.sys.entity.Role">
+	<select id="selectRoleList" resultType="com.shuzhuo.core.system.sys.entity.Role">
 		SELECT
 			<include refid="Base_Column_List"/>
 		FROM sys_role r

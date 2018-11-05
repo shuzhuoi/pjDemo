@@ -2,9 +2,7 @@ package ${package.Controller};
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-#if(${restControllerStyle})
+    #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
 #else
 import org.springframework.stereotype.Controller;
@@ -23,15 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.emgcy.core.system.base.BasePageDataDTO;
-import com.emgcy.core.common.annotation.RepeatUrlData;
+import com.shuzhuo.core.common.annotation.RepeatUrlData;
 import ${package.Entity}.${entity};
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.emgcy.core.common.base.BaseMsg;
-import javax.servlet.http.HttpServletRequest;
-import com.emgcy.core.common.shiro.ShiroUserUtil;
 
 /**
  * <p>

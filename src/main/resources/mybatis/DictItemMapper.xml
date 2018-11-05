@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.emgcy.core.system.dict.mapper.DictItemMapper">
+<mapper namespace="com.shuzhuo.core.system.dict.mapper.DictItemMapper">
 
 	<!-- 
 		  @author:chenshuzhuo
@@ -8,7 +8,7 @@
 	 -->
 	 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="com.emgcy.core.system.dict.entity.DictItem">
+	<resultMap id="BaseResultMap" type="com.shuzhuo.core.system.dict.entity.DictItem">
 		<id column="id" property="id" />
 		<result column="dict_id" property="dictId" />
 		<result column="dict_item_key" property="dictItemKey" />
@@ -59,7 +59,7 @@
         </if>
 	</sql>
 	
-	<select id="selectDictAllInfo" resultType="com.emgcy.core.system.dict.bean.DictAllInfo" parameterType="com.emgcy.core.system.dict.bean.DictAllInfo">
+	<select id="selectDictAllInfo" resultType="com.shuzhuo.core.system.dict.bean.DictAllInfo" parameterType="com.shuzhuo.core.system.dict.bean.DictAllInfo">
 		select 
 		<include refid="Base_Column_List"/>,
 		cr_dict_info.dict_code as dictCode,cr_dict_info.dict_name as dictName

@@ -9,7 +9,7 @@
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.context.junit4.SpringRunner;
 //
-//import com.emgcy.core.Application;
+//import Application;
 //import com.emgcy.core.system.es.bean.Article;
 //import com.emgcy.core.system.es.dao.ArticleSearchRepository;
 //
