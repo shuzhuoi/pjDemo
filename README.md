@@ -27,7 +27,7 @@
 #其中 "create_by", "create_time","update_by","update_time","del_flag","remark",为公共字段
 
 #--------------------------------优雅的分割线------------------------------------------
-
+~~~
 CREATE TABLE `test` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `create_by` BIGINT(20) DEFAULT NULL COMMENT '创建人',
@@ -38,6 +38,7 @@ CREATE TABLE `test` (
   `remark` VARCHAR(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='test表'
+~~~
 #----------------------------------------------------------------chenshuzhuo---------------
 #----------------------------------------------------------------2017-11-17----------------                                                                         
 
