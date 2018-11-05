@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emgcy.core.system.sys.mapper.RoleMapper">
+
+	<!-- 
+		  @author:buguangyi
+ 		  @since :2017-12-15
+	 -->
+	 
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.emgcy.core.system.sys.entity.Role">
+		<id column="id" property="id" />
+		<result column="org_hospital_id" property="orgHospitalId" />
+		<result column="role_type" property="roleType" />
+		<result column="role_name" property="roleName" />
+		<result column="summary" property="summary" />
+		<result column="status" property="status" />
+	    <result column="create_by" property="createBy" />
+	    <result column="create_time" property="createTime" />
+	    <result column="update_by" property="updateBy" />
+	    <result column="update_time" property="updateTime" />
+	    <result column="del_flag" property="delFlag" />
+	    <result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+	r.create_by AS createBy,
+	r.create_time AS createTime,
+	r.update_by AS updateBy,
+	r.update_time AS updateTime,
+	r.del_flag AS delFlag,
+	r.remark,
+        r.id, r.org_hospital_id AS orgHospitalId, r.role_type AS roleType, r.role_name AS roleName, r.summary, r.status
+    </sql>
+
+	<!-- mybatis plus where -->
+    <sql id="entityWrapperJoin">
+        <where>
+        	<if test="ew != null">
+    			<if test="ew.entity != null">
+                	<if test="ew.entity.id!=null">
+                    	AND r.id=#{ew.entity.id}
+                	</if>
+                	<if test="ew.entity.orgHospitalId!=null">
+                    	AND r.org_hospital_id=#{ew.entity.orgHospitalId}
+                	</if>
+                	<if test="ew.entity.roleType!=null">
+                    	AND r.role_type=#{ew.entity.roleType}
+                	</if>
+                	<if test="ew.entity.roleName!=null and ew.entity.roleName!=''">
+                    	AND r.role_name=#{ew.entity.roleName}
+                	</if>
+                	<if test="ew.entity.summary!=null and ew.entity.summary!=''">
+                    	AND r.summary=#{ew.entity.summary}
+                	</if>
+                	<if test="ew.entity.status!=null">
+                    	AND r.status=#{ew.entity.status}
+                	</if>
+        			<if test="ew.entity.createBy!=null">
+        				AND r.create_by=#{ew.entity.createBy}
+        			</if>
+        			<if test="ew.entity.createTime!=null">
+        				AND r.create_time=#{ew.entity.createTime}
+        			</if>
+        			<if test="ew.entity.updateBy!=null">
+        				AND r.update_by=#{ew.entity.updateBy}
+        			</if>
+        			<if test="ew.entity.updateTime!=null">
+        				AND r.update_time=#{ew.entity.updateTime}
+        			</if>
+        			<if test="ew.entity.delFlag!=null">
+        				AND r.del_flag=#{ew.entity.delFlag}
+        			</if>
+        			<if test="ew.entity.remark!=null and ew.entity.remark!=''">
+        				AND r.remark=#{ew.entity.remark}
+        			</if>
+				</if>
+            	<if test="ew!=null and ew.sqlSegment!=null and ew.notEmptyOfWhere">
+                	${ew.sqlSegment}
+            	</if>
+			</if>
+        </where>
+        <if test="ew!=null and ew.sqlSegment!=null and ew.emptyOfWhere">
+            ${ew.sqlSegment}
+        </if>
+	</sql>
+
+	<select id="selectUserRole" resultType="com.emgcy.core.system.sys.entity.Role">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_role r
+		LEFT JOIN sys_user_role ur ON ur.role_id = r.id
+		LEFT JOIN sys_user u ON u.id = ur.user_id
+		WHERE u.id = #{userId} AND r.status = 1 AND r.del_flag = 0
+	</select>
+	
+	<!-- 获取角色绑定的用户列表 -->
+	<select id="selectUserRoleList" resultType="com.emgcy.core.system.sys.entity.Role">
+		SELECT r.*
+		FROM sys_user_role ur
+		LEFT JOIN sys_role r ON r.id = ur.role_id
+		<include refid="entityWrapperJoin"/>
+	</select>
+	
+	<!--插入角色对应的用户-->
+	<insert id="insertUserRole">
+		insert into sys_user_role
+		(`user_id`,`role_id`)
+		values
+		<foreach collection="userIdList" item="item" index="index" separator="," >
+		(
+			#{item},
+			#{roleId}
+		)
+		</foreach>
+	</insert>
+	
+	<!--插入角色对应的菜单-->
+	<insert id="insertMenuRole">
+		insert into sys_role_menu
+		(`role_id`,`menu_id`)
+		values
+		<foreach collection="menuIdList" item="item" index="index" separator="," >
+		(
+			#{roleId},
+			#{item}
+		)
+		</foreach>
+	</insert>
+
+	<!--获取角色列表-->
+	<select id="selectRoleList" resultType="com.emgcy.core.system.sys.entity.Role">
+		SELECT
+			<include refid="Base_Column_List"/>
+		FROM sys_role r
+		    LEFT JOIN sys_role_menu roleMenu ON r.id = roleMenu.role_id
+		    LEFT JOIN sys_menu menu ON menu.id = roleMenu.menu_id
+			<include refid="entityWrapperJoin"/>
+	</select>
+
+</mapper>

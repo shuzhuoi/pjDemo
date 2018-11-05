@@ -1,0 +1,91 @@
+#dev
+
+#项目端口和上下文路径
+server:
+  port: 8080
+  context-path: /crEmgcy
+# tomcat的URI编码
+  tomcat:
+    uri-encoding: UTF-8
+
+    
+# 数据库配置
+spring:
+  profiles: dev
+  resources:
+    static-locations: classpath:/app/,classpath:/static/,classpath:/META-INF/resources/
+    cache-period: 60
+    chain:
+      cache: false
+
+  datasource:
+    name: dev
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.20:3306/cr_emgcy?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&characterSetResults=UTF-8
+    username: root
+    password: 123456
+    table-schema: cr_emgcy
+    #type: com.zaxxer.hikari.HikariDataSource
+    #hikari.cachePrepStmts: true
+    #hikari.prepStmtCacheSize: 250
+    #hikari.prepStmtCacheSqlLimit: 2048
+
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:ss:mm
+  output:
+    ansi:
+      enabled: always
+
+  http:
+    multipart:
+      max-file-size: 1600MB
+      max-request-size: 1600MB
+      
+  data:
+      elasticsearch:
+          #cluster-name: #默认为elasticsearch
+          #cluster-nodes: 127.0.0.1: #配置es节点信息，逗号分隔，如果没有指定，则启动ClientNode
+          properties:
+              path:
+                logs: ./es/log #es日志存储目录
+                data: ./es/data #es数据存储目录    
+
+#mybatis-plus
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    logPrefix: dao.
+
+#日志
+logging:
+  level: INFO
+#日志保存数据库
+logUrl: jdbc:mysql://192.168.1.20:3306/cr_emgcy
+logUser: root
+logPassWord: 123456
+
+#项目相关配置
+application:
+  #服务器路径
+  resourceHostPort: http://192.168.2.107:8080/crEmgcy
+  #上传文件的路径（服务器路径,开发环境）
+  #resourceRootPath: /User/crEmgcy/uploadFolder/
+  resourceRootPath: H:/temp
+  #nginx配置路径
+  hostURI: http://192.168.2.107/emgcy
+  #mybaitsPlus xml动态刷新(只允许开发环境开启)
+  mapperRefresh: true
+  #token过期时间(小时)
+  tokenExpireTime: 12
+  #excel模板路径
+  excelDeptTemplate: /file/template/科室导入模板.xlsx
+  excelUserTemplate: /file/template/用户导入模板.xlsx
+  excelItemTemplate: /file/template/急救项目导入模板.xlsx
+  excelDrugTemplate: /file/template/急救药品导入模板.xlsx
+  excelMaterialTemplate: /file/template/急救材料导入模板.xlsx
+  excelScheduleTemplate: /file/template/人员排班导入模板.xlsx
+  #等待出诊时间(毫秒)
+  waitVisitTime: 123000
+  

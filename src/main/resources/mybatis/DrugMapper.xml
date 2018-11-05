@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emgcy.core.system.resource.mapper.DrugMapper">
+
+	<!-- 
+		  @author:buguangyi
+ 		  @since :2018-01-27
+	 -->
+	 
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.emgcy.core.system.resource.entity.Drug">
+		<id column="id" property="id" />
+		<result column="org_hospital_id" property="orgHospitalId" />
+		<result column="num" property="num" />
+		<result column="name" property="name" />
+		<result column="approval" property="approval" />
+		<result column="spec" property="spec" />
+		<result column="company" property="company" />
+		<result column="unit" property="unit" />
+		<result column="charge" property="charge" />
+	    <result column="create_by" property="createBy" />
+	    <result column="create_time" property="createTime" />
+	    <result column="update_by" property="updateBy" />
+	    <result column="update_time" property="updateTime" />
+	    <result column="del_flag" property="delFlag" />
+	    <result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+	create_by,
+	create_time,
+	update_by,
+	update_time,
+	del_flag,
+	remark,
+        id, org_hospital_id AS orgHospitalId, num, name, approval, spec, company, unit, charge
+    </sql>
+
+	<!-- mybatis plus where -->
+    <sql id="entityWrapperJoin">
+        <where>
+        	<if test="ew != null">
+    			<if test="ew.entity != null">
+                	<if test="ew.entity.id!=null">
+                    	AND cur_tab.id=#{ew.entity.id}
+                	</if>
+                	<if test="ew.entity.orgHospitalId!=null">
+                    	AND cur_tab.org_hospital_id=#{ew.entity.orgHospitalId}
+                	</if>
+                	<if test="ew.entity.num!=null and ew.entity.num!=''">
+                    	AND cur_tab.num=#{ew.entity.num}
+                	</if>
+                	<if test="ew.entity.name!=null and ew.entity.name!=''">
+                    	AND cur_tab.name=#{ew.entity.name}
+                	</if>
+                	<if test="ew.entity.approval!=null and ew.entity.approval!=''">
+                    	AND cur_tab.approval=#{ew.entity.approval}
+                	</if>
+                	<if test="ew.entity.spec!=null and ew.entity.spec!=''">
+                    	AND cur_tab.spec=#{ew.entity.spec}
+                	</if>
+                	<if test="ew.entity.company!=null and ew.entity.company!=''">
+                    	AND cur_tab.company=#{ew.entity.company}
+                	</if>
+                	<if test="ew.entity.unit!=null and ew.entity.unit!=''">
+                    	AND cur_tab.unit=#{ew.entity.unit}
+                	</if>
+                	<if test="ew.entity.charge!=null">
+                    	AND cur_tab.charge=#{ew.entity.charge}
+                	</if>
+        			<if test="ew.entity.createBy!=null">
+        				AND cur_tab.create_by=#{ew.entity.createBy}
+        			</if>
+        			<if test="ew.entity.createTime!=null">
+        				AND cur_tab.create_time=#{ew.entity.createTime}
+        			</if>
+        			<if test="ew.entity.updateBy!=null">
+        				AND cur_tab.update_by=#{ew.entity.updateBy}
+        			</if>
+        			<if test="ew.entity.updateTime!=null">
+        				AND cur_tab.update_time=#{ew.entity.updateTime}
+        			</if>
+        			<if test="ew.entity.delFlag!=null">
+        				AND cur_tab.del_flag=#{ew.entity.delFlag}
+        			</if>
+        			<if test="ew.entity.remark!=null and ew.entity.remark!=''">
+        				AND cur_tab.remark=#{ew.entity.remark}
+        			</if>
+				</if>
+            	<if test="ew!=null and ew.sqlSegment!=null and ew.notEmptyOfWhere">
+                	${ew.sqlSegment}
+            	</if>
+			</if>
+        </where>
+        <if test="ew!=null and ew.sqlSegment!=null and ew.emptyOfWhere">
+            ${ew.sqlSegment}
+        </if>
+	</sql>
+
+
+
+
+</mapper>

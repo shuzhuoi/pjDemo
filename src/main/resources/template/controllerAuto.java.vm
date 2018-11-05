@@ -1,0 +1,119 @@
+package ${package.Controller};
+
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+import ${package.Service}.${table.serviceName};
+import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.emgcy.core.system.base.BasePageDataDTO;
+import com.emgcy.core.common.annotation.RepeatUrlData;
+import ${package.Entity}.${entity};
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.emgcy.core.common.base.BaseMsg;
+import javax.servlet.http.HttpServletRequest;
+import com.emgcy.core.common.shiro.ShiroUserUtil;
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Api(tags="${table.comment}类")
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+	private static final Logger logger = LoggerFactory.getLogger(${table.controllerName}.class);
+	
+	@Autowired
+	private ${table.serviceName} ${table.entityPath}Service;
+	
+	@ApiOperation(value = "获取列表")
+	@GetMapping("/list")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "页码", dataType = "Integer",paramType="query"),
+		@ApiImplicitParam(name = "limit", value = "页数量", dataType = "Integer",paramType="query"),
+		@ApiImplicitParam(name = "orderField", value = "排序字段", dataType = "String",paramType="query"),
+		@ApiImplicitParam(name = "order", value = "升降序", dataType = "String",paramType="query")})
+	@ResponseBody
+	public BasePageDataDTO<${entity}> list(HttpServletRequest request) {
+		${entity} entity=new ${entity}();
+#foreach($field in ${table.fields})
+#if(${field.propertyName} == 'orgHospitalId')
+		entity.setOrgHospitalId(ShiroUserUtil.getCurrentUser().getOrgHospitalId());
+#end
+#end
+		Wrapper<${entity}> wrapper = new EntityWrapper<${entity}>(entity);
+		Page<${entity}> currentPage = buildPage(request);
+		buildSearch(request, wrapper);
+		buildOrder(request, wrapper);
+	    Page<${entity}> selectPage = ${table.entityPath}Service.selectPage(currentPage, wrapper);
+		return new BasePageDataDTO<${entity}>(selectPage.getRecords(), selectPage.getTotal());
+	}
+	
+	@GetMapping("/getInfo")
+	@ApiOperation(value = "根据id获取信息")
+	@ResponseBody
+	public BaseMsg getInfo(@RequestParam @ApiParam(name = "id", value = "id", required = true) long id) {
+		${entity} entity = ${table.entityPath}Service.selectById(id);
+		return BaseMsg.successData(entity);
+	}
+	
+	@GetMapping("/del")
+	@RepeatUrlData
+	@ApiOperation(value = "根据id删除信息")
+	@ResponseBody
+	public BaseMsg del(@RequestParam @ApiParam(name = "id", value = "id", required = true) long id) {
+		if(${table.entityPath}Service.deleteById(id))
+			return BaseMsg.successMsg("删除成功!");
+		return BaseMsg.errorMsg("删除失败!");
+	}
+	
+	@PostMapping("/saveOrEdit")
+	@RepeatUrlData
+	@ApiOperation(value = "新增或修改信息")
+	@ResponseBody
+	public BaseMsg saveOrEdit(${entity} entity) {
+#foreach($field in ${table.fields})
+#if(${field.propertyName} == 'orgHospitalId')
+	    if(entity.getId()==null)
+	    	entity.setOrgHospitalId(ShiroUserUtil.getCurrentUser().getOrgHospitalId());
+#end
+#end
+		if (${table.entityPath}Service.insertOrUpdate(entity))
+			return BaseMsg.successMsg("保存成功!");
+		return BaseMsg.errorMsg("保存失败!");
+
+	}
+	
+}

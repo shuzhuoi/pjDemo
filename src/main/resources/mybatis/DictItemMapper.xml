@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emgcy.core.system.dict.mapper.DictItemMapper">
+
+	<!-- 
+		  @author:chenshuzhuo
+ 		  @since :2017-11-30
+	 -->
+	 
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.emgcy.core.system.dict.entity.DictItem">
+		<id column="id" property="id" />
+		<result column="dict_id" property="dictId" />
+		<result column="dict_item_key" property="dictItemKey" />
+		<result column="dict_item_value" property="dictItemValue" />
+		<result column="sort" property="sort" />
+		<result column="is_enable" property="isEnable" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        cur_tab.id, cur_tab.dict_id AS dictId, cur_tab.dict_item_key AS dictItemKey, cur_tab.dict_item_value AS dictItemValue, cur_tab.sort, cur_tab.is_enable AS isEnable
+    </sql>
+
+	<!-- mybatis plus where -->
+    <sql id="entityWrapperJoin">
+        <where>
+        	<if test="ew != null">
+    			<if test="ew.entity != null">
+                	<if test="ew.entity.id!=null">
+                    	AND cur_tab.id=#{ew.entity.id}
+                	</if>
+                	<if test="ew.entity.dictId!=null">
+                    	AND cur_tab.dict_id=#{ew.entity.dictId}
+                	</if>
+                	<if test="ew.entity.dictItemKey!=null and ew.entity.dictItemKey!=''">
+                    	AND cur_tab.dict_item_key=#{ew.entity.dictItemKey}
+                	</if>
+                	<if test="ew.entity.dictItemValue!=null and ew.entity.dictItemValue!=''">
+                    	AND cur_tab.dict_item_value=#{ew.entity.dictItemValue}
+                	</if>
+                	<if test="ew.entity.sort!=null">
+                    	AND cur_tab.sort=#{ew.entity.sort}
+                	</if>
+                	<if test="ew.entity.isEnable!=null">
+                    	AND cur_tab.is_enable=#{ew.entity.isEnable}
+                	</if>
+                	<if test="ew.entity.delFlag!=null and ew.entity.delFlag!=''">
+                    	AND cur_tab.del_flag=#{ew.entity.delFlag}
+                	</if>
+				</if>
+            	<if test="ew!=null and ew.sqlSegment!=null and ew.notEmptyOfWhere">
+                	${ew.sqlSegment}
+            	</if>
+			</if>
+        </where>
+        <if test="ew!=null and ew.sqlSegment!=null and ew.emptyOfWhere">
+            ${ew.sqlSegment}
+        </if>
+	</sql>
+	
+	<select id="selectDictAllInfo" resultType="com.emgcy.core.system.dict.bean.DictAllInfo" parameterType="com.emgcy.core.system.dict.bean.DictAllInfo">
+		select 
+		<include refid="Base_Column_List"/>,
+		cr_dict_info.dict_code as dictCode,cr_dict_info.dict_name as dictName
+		from cr_dict_item cur_tab,cr_dict_info
+		where cr_dict_info.id = cur_tab.dict_id
+		AND cur_tab.is_enable=#{isEnable} 
+		AND cr_dict_info.is_enable=#{isEnable}
+		<if test="dictCode !=null and dictCode !=''">
+		and cr_dict_info.dict_code = #{dictCode}
+		</if>
+		<if test="dictItemKey !=null and dictItemKey !=''">
+		AND cur_tab.dict_item_key=#{dictItemKey}
+		</if>
+		ORDER BY sort
+	</select>
+	
+
+
+
+
+
+</mapper>

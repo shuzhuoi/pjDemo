@@ -1,0 +1,5 @@
+spring:
+  profiles.active: dev
+#  profiles.active: test
+#  profiles.active: production
+

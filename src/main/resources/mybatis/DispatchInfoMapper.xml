@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.emgcy.core.system.dispatch.mapper.DispatchInfoMapper">
+
+	<!-- 
+		  @author:chenshuzhuo
+ 		  @since :2018-01-05
+	 -->
+	 
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.emgcy.core.system.dispatch.entity.DispatchInfo">
+		<id column="id" property="id" />
+		<result column="vehicle_id" property="vehicleId" />
+		<result column="vehicle_state" property="vehicleState" />
+		<result column="org_hospital_id" property="orgHospitalId" />
+		<result column="doctor_state" property="doctorState" />
+		<result column="nurse_state" property="nurseState" />
+		<result column="driver_id" property="driverId" />
+		<result column="doctor_id" property="doctorId" />
+		<result column="nurse_id" property="nurseId" />
+		<!-- <result column="stretcher_id" property="stretcherId" /> -->
+		<result column="reason" property="reason" />
+		<result column="visit_time" property="visitTime" />
+		<result column="arrive_time" property="arriveTime" />
+		<result column="end_time" property="endTime" />
+	    <result column="create_by" property="createBy" />
+	    <result column="create_time" property="createTime" />
+	    <result column="update_by" property="updateBy" />
+	    <result column="update_time" property="updateTime" />
+	    <result column="record_state" property="recordState" />
+	    <result column="del_flag" property="delFlag" />
+	    <result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+	create_by AS createBy,
+	create_time AS createTime,
+	update_by AS updateBy,
+	update_time AS updateTime,
+	del_flag AS delFlag,
+	remark,
+        id, org_hospital_id,vehicle_id AS vehicleId,vehicle_state AS vehicleState,driver_id AS driverId, doctor_id AS doctorId, nurse_id AS nurseId,reason,visit_time AS visitTime,arrive_time AS arriveTime,end_time AS endTime,record_state
+    </sql>
+
+	<!-- mybatis plus where -->
+    <sql id="entityWrapperJoin">
+        <where>
+        	<if test="ew != null">
+    			<if test="ew.entity != null">
+                	<if test="ew.entity.id!=null">
+                    	AND cur_tab.id=#{ew.entity.id}
+                	</if>
+                	<if test="ew.entity.vehicleId!=null">
+                    	AND cur_tab.vehicle_id=#{ew.entity.vehicleId}
+                	</if>
+                	<if test="ew.entity.orgHospitalId!=null">
+                    	AND cur_tab.org_hospital_id=#{ew.entity.orgHospitalId}
+                	</if>
+                	<if test="ew.entity.driverId!=null">
+                    	AND cur_tab.driver_id=#{ew.entity.driverId}
+                	</if>
+					<if test="ew.entity.vehicleState!=null">
+						AND cur_tab.vehicle_state=#{ew.entity.vehicleState}
+					</if>
+                	<if test="ew.entity.doctorId!=null and ew.entity.doctorId!=''">
+                    	AND cur_tab.doctor_id=#{ew.entity.doctorId}
+                	</if>
+                	<if test="ew.entity.nurseId!=null and ew.entity.nurseId!=''">
+                    	AND cur_tab.nurse_id=#{ew.entity.nurseId}
+                	</if>
+                	<!-- <if test="ew.entity.stretcherId!=null and ew.entity.stretcherId!=''">
+                    	AND cur_tab.stretcher_id=#{ew.entity.stretcherId}
+                	</if> -->
+					<if test="ew.entity.reason!=null">
+						AND cur_tab.reason=#{ew.entity.reason}
+					</if>
+					<if test="ew.entity.visitTime!=null">
+						AND cur_tab.visit_time=#{ew.entity.visitTime}
+					</if>
+					<if test="ew.entity.arriveTime!=null">
+						AND cur_tab.arrive_time=#{ew.entity.arriveTime}
+					</if>
+					<if test="ew.entity.endTime!=null">
+						AND cur_tab.end_time=#{ew.entity.endTime}
+					</if>
+        			<if test="ew.entity.createBy!=null">
+        				AND cur_tab.create_by=#{ew.entity.createBy}
+        			</if>
+        			<if test="ew.entity.createTime!=null">
+        				AND cur_tab.create_time=#{ew.entity.createTime}
+        			</if>
+        			<if test="ew.entity.updateBy!=null">
+        				AND cur_tab.update_by=#{ew.entity.updateBy}
+        			</if>
+        			<if test="ew.entity.updateTime!=null">
+        				AND cur_tab.update_time=#{ew.entity.updateTime}
+        			</if>
+        			<if test="ew.entity.recordState!=null">
+        				AND cur_tab.record_state=#{ew.entity.recordState}
+        			</if>
+        			<if test="ew.entity.delFlag!=null">
+        				AND cur_tab.del_flag=#{ew.entity.delFlag}
+        			</if>
+        			<if test="ew.entity.remark!=null and ew.entity.remark!=''">
+        				AND cur_tab.remark=#{ew.entity.remark}
+        			</if>
+				</if>
+            	<if test="ew!=null and ew.sqlSegment!=null and ew.notEmptyOfWhere">
+                	${ew.sqlSegment}
+            	</if>
+			</if>
+        </where>
+        <if test="ew!=null and ew.sqlSegment!=null and ew.emptyOfWhere">
+            ${ew.sqlSegment}
+        </if>
+	</sql>
+	
+	<select id="selectInfo" resultMap="BaseResultMap" parameterType="com.emgcy.core.system.dispatch.entity.DispatchInfo">
+		SELECT emergency_id,vehicle_state,
+		(SELECT NAME FROM sys_org WHERE del_flag=0 AND id=cur_tab.org_hospital_id) orgHospitalName,
+		(SELECT num FROM cr_vehicle WHERE del_flag=0 AND id=cur_tab.`vehicle_id`) vehicleNum,
+		(SELECT NAME FROM sys_user WHERE del_flag=0 AND id=cur_tab.driver_id) driverName,
+		(SELECT phone FROM sys_user WHERE del_flag=0 AND id=cur_tab.driver_id) driverPhone,
+		(SELECT NAME FROM sys_user WHERE del_flag=0 AND id=cur_tab.doctor_id) doctorName,
+		(SELECT NAME FROM sys_org WHERE del_flag=0 AND id=((SELECT org_dept_id FROM sys_user WHERE del_flag=0 AND id=cur_tab.doctor_id))) doctorDeptName,
+		(SELECT NAME FROM sys_user WHERE del_flag=0 AND id=cur_tab.nurse_id) nurseName,
+		(SELECT NAME FROM sys_org WHERE del_flag=0 AND id=((SELECT org_dept_id FROM sys_user WHERE del_flag=0 AND id=cur_tab.nurse_id))) nurseDeptName,
+		(SELECT NAME FROM sys_user WHERE del_flag=0 AND id=cur_tab.create_by) createName
+		 FROM cr_dispatch_info cur_tab 
+		 <include refid="entityWrapperJoin"/>
+	</select>
+
+	<resultMap id="trackResultMap" type="com.emgcy.core.system.track.dto.ProgressTrackDTO">
+		<result column="vehicleNum" property="vehicleNum" />
+		<result column="driverName" property="driverName" />
+		<result column="telPhone" property="telPhone" />
+		<result column="doctorName" property="doctorName" />
+		<result column="deptName" property="deptName" />
+		<result column="doctorInfo" property="doctorInfo" />
+		<result column="nurse" property="nurse" />
+		<result column="stretcher" property="stretcher" />
+		<result column="vehicleState" property="vehicleState" />
+		<result column="singleTime" property="singleTime" />
+		<result column="emgcyName" property="emgcyName" />
+		<result column="departureTime" property="departureTime" />
+		<result column="arriveTime" property="arriveTime" />
+		<result column="finishTime" property="finishTime" />
+	</resultMap>
+
+	<sql id="DictInfo_Column_List">
+		vehicle.num AS vehicleNum,
+		driver.name AS driverName,
+		driver.phone AS telPhone,
+		doctor.name AS doctorName,
+		dept.name AS deptName,
+		nurse.name AS nurse,
+		stretcher.name AS stretcher,
+		cur_tab.create_time AS singleTime,
+		emergency.name AS emgcyName,
+		cur_tab.vehicle_state AS vehicleState,
+		cur_tab.visit_time AS departureTime,
+		cur_tab.arrive_time AS arriveTime,
+		cur_tab.end_time AS finishTime
+	</sql>
+
+	<select id="selectDictInfo" parameterType="com.emgcy.core.system.dispatch.entity.DispatchInfo" resultMap="trackResultMap">
+		SELECT
+		<include refid="DictInfo_Column_List"/>
+		FROM
+		cr_dispatch_info cur_tab
+		LEFT JOIN cr_vehicle vehicle ON cur_tab.vehicle_id = vehicle.id
+		LEFT JOIN sys_user driver ON cur_tab.driver_id = driver.id
+		LEFT JOIN sys_user doctor ON cur_tab.doctor_id = doctor.id
+		LEFT JOIN sys_org dept ON doctor.org_dept_id = dept.id
+		LEFT JOIN sys_user nurse ON cur_tab.nurse_id = nurse.id
+		LEFT JOIN sys_user stretcher ON cur_tab.stretcher_id = stretcher.id
+		LEFT JOIN cr_emergency emergency ON cur_tab.emergency_id = emergency.id
+		<include refid="entityWrapperJoin"/>
+	</select>
+	
+	<select id="selectDisCount" resultType="java.lang.Integer" parameterType="com.emgcy.core.system.dispatch.entity.DispatchInfo">
+		select count(1) from(
+		select d.*,
+		(select dict_item_key from cr_dict_item where is_enable=1 and dict_item_key and id=(SELECT job_title FROM sys_user WHERE del_flag=0 AND id=d.nurse_id)) nurseKey,
+		(select dict_item_key from cr_dict_item where is_enable=1 and dict_item_key and id=(SELECT job_title FROM sys_user WHERE del_flag=0 AND id=d.doctor_id)) doctorKey
+		FROM
+		cr_dispatch_info d
+		
+		) cur_tab 
+		<include refid="entityWrapperJoin"/>
+	</select>
+
+
+
+
+</mapper>
