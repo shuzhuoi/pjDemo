@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
 
 /**
- * 
+ *
  * @author chenshuzhuo
  * @date 2017-11-23
  *
@@ -17,8 +17,8 @@ public class StringToDateConverter implements Converter<String, Date>{
 	private static final String YMD_DATE_FORMAT = "yyyy-MM-dd";
 	private static final String YMDHM_DATE_FORMAT = "yyyy-MM-dd HH:mm";
 	private static final String YMDHMS_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-	
-	    
+
+
 	@Override
 	public Date convert(String source) {
 		if(StringUtils.isBlank(source)){

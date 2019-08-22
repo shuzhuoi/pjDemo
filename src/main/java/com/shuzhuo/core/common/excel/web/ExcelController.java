@@ -57,15 +57,12 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-/**
- * @author buguangyi
- * @since 2017-11-24
- */
+
 @Api(tags="excel导入导出类")
 @RestController
 @RequestMapping("/excel")
 public class ExcelController extends AbstractController {
-	
+
 	@Autowired
 	private IOrgService orgService;
 	@Autowired
@@ -86,7 +83,7 @@ public class ExcelController extends AbstractController {
     private IAttachmentService attachmentService;
 	@Autowired
 	private ApplicationYmlConfig config;
-	
+
 	@ApiOperation(value = "获取excel模板")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")})
@@ -108,15 +105,15 @@ public class ExcelController extends AbstractController {
 		} else {
 			return BaseMsg.errorMsg("模板标识不正确");
 		}
-		
+
 		return BaseMsg.success().put("excelUrl", hostPath);
 	}
-	
+
 	@ApiOperation(value = "导入科室")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")})
 	@PostMapping("/importDept")
-	public BaseMsg importDept(HttpServletRequest request,HttpServletResponse response, 
+	public BaseMsg importDept(HttpServletRequest request,HttpServletResponse response,
 			@ApiParam(name = "file", value = "科室excel") @RequestParam(value = "file") MultipartFile importFile)throws Exception{
 		BaseMsg msg = new BaseMsg();
 		if (importFile == null || importFile.isEmpty()){
@@ -146,14 +143,14 @@ public class ExcelController extends AbstractController {
             String logId = saveLogFile(request, workbook);
 
             msg.put("logId",logId);
-        	
-        	
+
+
         } catch (Exception e){
             throw new CustomException(e.getMessage());
         }
 		return msg;
 	}
-	
+
 	@ApiOperation(value = "导入用户")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")})
@@ -197,18 +194,18 @@ public class ExcelController extends AbstractController {
             String logId = saveLogFile(request, workbook);
 
             msg.put("logId",logId);
-        	
+
         } catch (Exception e){
             throw new CustomException(e.getMessage());
         }
 		return msg;
 	}
-	
+
 	@ApiOperation(value = "导入急救项目")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")})
 	@PostMapping("/importItem")
-	public BaseMsg importItem(HttpServletRequest request,HttpServletResponse response, 
+	public BaseMsg importItem(HttpServletRequest request,HttpServletResponse response,
 			@ApiParam(name = "file", value = "急救项目excel") @RequestParam(value = "file") MultipartFile importFile)throws Exception{
 		BaseMsg msg = new BaseMsg();
 		if (importFile == null || importFile.isEmpty()){
@@ -238,19 +235,19 @@ public class ExcelController extends AbstractController {
             String logId = saveLogFile(request, workbook);
 
             msg.put("logId",logId);*/
-        	
-        	
+
+
         } catch (Exception e){
             throw new CustomException(e.getMessage());
         }
 		return msg;
 	}
-	
+
 	@ApiOperation(value = "导入急救药品")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")})
 	@PostMapping("/importDrug")
-	public BaseMsg importDrug(HttpServletRequest request,HttpServletResponse response, 
+	public BaseMsg importDrug(HttpServletRequest request,HttpServletResponse response,
 			@ApiParam(name = "file", value = "急救药品excel") @RequestParam(value = "file") MultipartFile importFile)throws Exception{
 		BaseMsg msg = new BaseMsg();
 		if (importFile == null || importFile.isEmpty()){
@@ -280,19 +277,19 @@ public class ExcelController extends AbstractController {
             String logId = saveLogFile(request, workbook);
 
            /* msg.put("logId",logId);*/
-        	
-        	
+
+
         } catch (Exception e){
             throw new CustomException(e.getMessage());
         }
 		return msg;
 	}
-	
+
 	@ApiOperation(value = "导入急救材料")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")})
 	@PostMapping("/importMaterial")
-	public BaseMsg importMaterial(HttpServletRequest request,HttpServletResponse response, 
+	public BaseMsg importMaterial(HttpServletRequest request,HttpServletResponse response,
 			@ApiParam(name = "file", value = "急救材料excel") @RequestParam(value = "file") MultipartFile importFile)throws Exception{
 		BaseMsg msg = new BaseMsg();
 		if (importFile == null || importFile.isEmpty()){
@@ -322,19 +319,19 @@ public class ExcelController extends AbstractController {
             String logId = saveLogFile(request, workbook);
 
             msg.put("logId",logId);*/
-        	
-        	
+
+
         } catch (Exception e){
             throw new CustomException(e.getMessage());
         }
 		return msg;
 	}
-	
+
 	@ApiOperation(value = "导入人员排班")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")})
 	@PostMapping("/importSchedule")
-	public BaseMsg importSchedule(HttpServletRequest request,HttpServletResponse response, 
+	public BaseMsg importSchedule(HttpServletRequest request,HttpServletResponse response,
 			@ApiParam(name = "file", value = "人员排班excel") @RequestParam(value = "file") MultipartFile importFile)throws Exception{
 		BaseMsg msg = new BaseMsg();
 		if (importFile == null || importFile.isEmpty()){
@@ -364,14 +361,14 @@ public class ExcelController extends AbstractController {
             String logId = saveLogFile(request, workbook);
 
             msg.put("logId",logId);*/
-        	
-        	
+
+
         } catch (Exception e){
             throw new CustomException(e.getMessage());
         }
 		return msg;
 	}
-	
+
     /**
      * 写入导入日志
      *
@@ -430,7 +427,7 @@ public class ExcelController extends AbstractController {
 
         }
     }
-	
+
     /**
      * 保存导入日志文件
      *
@@ -443,13 +440,13 @@ public class ExcelController extends AbstractController {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         workbook.write(baos);
         byte[] bytes = baos.toByteArray();
-        
+
         MultipartFile multi = new MyMockMultipartFile("导入日志","导入日志.xlsx",null, bytes);
-        
+
         BaseMsg msg = attachmentService.saveFile(multi);
         //附件
         Attachment attachment = (Attachment)msg.get("data");
-        
+
         baos.close();
         return attachment.getId().toString();
     }

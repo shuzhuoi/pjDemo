@@ -14,6 +14,10 @@ import org.springframework.stereotype.Component;
 import com.shuzhuo.core.common.util.SpringContextHolder;
 import com.shuzhuo.core.system.sys.service.IUserService;
 
+/**
+ * @author  shuzhuo
+ * @date 2017-12-02
+ */
 @ServerEndpoint(value = "/websocket/{params}")
 @Component
 public class WsHandler {

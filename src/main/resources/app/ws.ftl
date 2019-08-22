@@ -34,7 +34,7 @@
 	<h1>ws.ftl</h1>
 	<input id="text" type="text" /><button id="connect1" onclick="connect1();">连接</button>
 	<button onclick="send()">Send</button><br>
-	 
+
 	<button onclick="closeWebSocket()">Close</button><br>
 	<div id="message">
 	</div>
@@ -54,24 +54,24 @@
     <a href="${base}/main.ftl">main.ftl</a><br>
     <a href="${base}/a.ftl">/a.ftl</a>
 </div>
- 
-   
+
+
 
 <script type="text/javascript">
     var websocket = null;
 
-    
+
     	//判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            websocket = new WebSocket("ws://192.168.2.231:8080/crEmgcy/websocket");
+            websocket = new WebSocket("ws://192.168.2.231:8080/websocket");
         }
         else{
             alert('Not support websocket')
         }
-    
-    
-	
-		
+
+
+
+
 		//连接发生错误的回调方法
 	    websocket.onerror = function(){
 	        setMessageInnerHTML("error");
@@ -96,9 +96,9 @@
 	    window.onbeforeunload = function(){
 	        websocket.close();
 	    }
-		
-	
-    
+
+
+
 
     //将消息显示在网页上
     function setMessageInnerHTML(innerHTML){
@@ -139,7 +139,7 @@
             stompClient.subscribe('/topic/getResponse', function(respnose){
                 showResponse(respnose.body);
             });
-            
+
             //4通过stompClient.subscribe（）订阅服务器的目标是'/user/' + userId + '/msg'接收一对一的推送消息,其中userId由服务端传递过来,用于表示唯一的用户,通过此值将消息精确推送给一个用户
             stompClient.subscribe('/user/' + userId + '/msg', function(respnose){
             	console.log(respnose.body);
@@ -155,7 +155,7 @@
         }
         setConnected(false);
         console.log("Disconnected");
-        
+
     }
 
     function sendName() {

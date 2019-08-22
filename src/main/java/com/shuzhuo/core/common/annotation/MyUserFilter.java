@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * 用户数据过滤
  *
- * @author bgy
+ * @author
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -24,7 +24,7 @@ import com.subversion.core.SubVersion;
  * <p>
  * mybatis plus 代码自动生成工具类
  * </p>
- * 
+ *
  * @author chenshuzhuo
  * @date 2017-10-18
  * @version 0.3
@@ -32,8 +32,8 @@ import com.subversion.core.SubVersion;
 public class MpGenerator {
 
 	// 数据库配置
-	// private static String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/cr_emgcy?characterEncoding=utf8";
-	private static String JDBC_URL = "jdbc:mysql://192.168.1.20:3306/cr_emgcy?characterEncoding=utf8";
+	// private static String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/pjDemo?characterEncoding=utf8";
+	private static String JDBC_URL = "jdbc:mysql://192.168.1.20:3306/pjDemo?characterEncoding=utf8";
 
 	private static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	private static String JDBC_USERNAME = "root";
@@ -49,17 +49,17 @@ public class MpGenerator {
 	private static boolean controllerAuto = true;
 
 	// 生成的包路径
-	private static String PACKAGEDIR = "com.emgcy.core.system";
+	private static String PACKAGEDIR = "com.pjDemo.core.system";
 
 	// xml 生成路径
 	private static String MYBATIS_XML = System.getProperty("user.dir") + "/src/main/resources/mybatis/";
 
-	
+
 	/**
 	 * <p>
 	 * 跟据数据库表自动生成java代码和mapper文件
 	 * </p>
-	 * 
+	 *
 	 */
 	public static void main(String[] args) {
 		// 生成test表
@@ -77,7 +77,7 @@ public class MpGenerator {
 
 	/**
 	 * 执行
-	 * 
+	 *
 	 * @param moduleName
 	 *            模块名
 	 * @param tabArr

@@ -19,7 +19,7 @@ public class MD5Util {
 			ne.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 对一个文件获取md5值
 	 * @author chenshuzhuo
@@ -50,13 +50,13 @@ public class MD5Util {
 			}
 		}
 	}
-	
-	
-	
+
+
+
     public static String encode(String string) {
         String encode = defaultEncode(string);
         StringBuilder sb = new StringBuilder();
-        sb.append("cr-emgcy");
+        sb.append("cr-PjDemo");
         int i = 0;
 
         for(int length = encode.length() / 2; i < length; ++i) {

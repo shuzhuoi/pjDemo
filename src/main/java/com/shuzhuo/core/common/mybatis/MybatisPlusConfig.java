@@ -25,23 +25,23 @@ import com.baomidou.mybatisplus.spring.MybatisMapperRefresh;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 
 /**
- * 
+ *
  * @author chenshuzhuo
  * @date 2017-11-02
  * @version 0.2
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan("com.emgcy.core.system.**.mapper*")
+@MapperScan("com.pjDemo.core.system.**.mapper*")
 public class MybatisPlusConfig {
 
 	private static final Logger logger = LoggerFactory.getLogger(MybatisPlusConfig.class);
-	
+
 	private static final String MAPPER_LOCATIONS = "classpath:mybatis/**/*Mapper.xml";
-	
+
 	@Autowired
 	private ApplicationYmlConfig applicationYmlConfig;
-	
+
 	@Bean
 	public MybatisMapperRefresh mybatisMapperRefresh(SqlSessionFactory sqlSessionFactory) throws Exception{
 		if(logger.isDebugEnabled()){
@@ -49,7 +49,7 @@ public class MybatisPlusConfig {
 		}
 		return new MybatisMapperRefresh(sqlSessionFactory, applicationYmlConfig.isMapperRefresh());
 	}
-	
+
 	@Bean
 	public PerformanceInterceptor performanceInterceptor() {
 		PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
@@ -93,7 +93,7 @@ public class MybatisPlusConfig {
 	@Bean
 	public SqlSessionFactory sqlSessionFactory(@Qualifier(value = "globalConfiguration") GlobalConfiguration globalConfiguration,@Qualifier(value = "dataSource") DataSource dataSource) throws Exception {
 		String configLocation = "classpath:mybatis-sqlconfig.xml";
-		String typeAliasesPackage = "com.emgcy.core.system.**.entity";
+		String typeAliasesPackage = "com.pjDemo.core.system.**.entity";
 		MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dataSource);
 		sqlSessionFactory.setGlobalConfig(globalConfiguration);

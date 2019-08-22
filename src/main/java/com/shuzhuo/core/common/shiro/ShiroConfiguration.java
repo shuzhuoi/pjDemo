@@ -25,14 +25,14 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 
 
 /**
- * 
+ *
  * @author chenshuzhuo
  * @date 2017-10-20
  *
  */
 @Configuration
 public class ShiroConfiguration {
-	
+
 //	public static final int HASH_INTERATIONS = 1024;
 
 	@Bean
@@ -44,14 +44,14 @@ public class ShiroConfiguration {
 		filterRegistrationBean.setFilter(proxy);
 		return filterRegistrationBean;
 	}
-	
+
 	@Bean("sessionManager")
 	public DefaultWebSessionManager sessionManager() {
 		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
 		// session 失效时长 30min 这里单位毫秒
 		sessionManager.setGlobalSessionTimeout(1800000);
 		sessionManager.setDeleteInvalidSessions(true);
-		
+
 		//是否开启会话验证器，默认是开启的
 		sessionManager.setSessionValidationSchedulerEnabled(true);
 		sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
@@ -62,7 +62,7 @@ public class ShiroConfiguration {
 		sessionManager.setSessionIdCookie(sessionIdCookie());
 		return sessionManager;
 	}
-	
+
 	@Bean
 	public SecurityManager securityManager(ShiroRealm authRealm) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -76,7 +76,7 @@ public class ShiroConfiguration {
 	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
-		
+
 		//oauth过滤
         Map<String, Filter> filters = new HashMap<>();
         filters.put("oauth2", new ShiroOAuthFilter());
@@ -109,34 +109,34 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/attachment/downBigFile", "anon");
         filterChainDefinitionMap.put("/", "anon");
 		filterChainDefinitionMap.put("/**", "oauth2");
-		
+
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;
 	}
-	
+
 	@Bean("lifecycleBeanPostProcessor")
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
 		return new LifecycleBeanPostProcessor();
 	}
-	
+
 	@Bean
 	public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
 		DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
 		creator.setProxyTargetClass(true);
 		return creator;
 	}
-	
+
 	@Bean
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager manager) {
 		AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
 		advisor.setSecurityManager(manager);
 		return advisor;
 	}
-	
+
 	/**
 	 * 会话验证调度器
-	 * 
+	 *
 	 * @return
 	 */
 	@Bean
@@ -146,7 +146,7 @@ public class ShiroConfiguration {
 		scheduler.setInterval(1800000);
 		return scheduler;
 	}
-	
+
 	@Bean
 	public EnterpriseCacheSessionDAO sessionDao() {
 		EnterpriseCacheSessionDAO sessionDAO = new EnterpriseCacheSessionDAO();
@@ -154,27 +154,27 @@ public class ShiroConfiguration {
 		sessionDAO.setSessionIdGenerator(sessionIdGenerator());
 		return sessionDAO;
 	}
-	
+
 	/**
 	 * 会话ID生成器，用于生成会话ID
-	 * 
+	 *
 	 * @return
 	 */
 	@Bean
 	public JavaUuidSessionIdGenerator sessionIdGenerator() {
 		return new JavaUuidSessionIdGenerator();
 	}
-	
+
 	@Bean
 	public EhCacheManager ehCacheManager() {
 		EhCacheManager cacheManager = new EhCacheManager();
 		cacheManager.setCacheManagerConfigFile("classpath:cache/ehcache-shiro.xml");
 		return cacheManager;
 	}
-	
+
 	@Bean
 	public SimpleCookie sessionIdCookie() {
-		SimpleCookie sc = new SimpleCookie("emgcy.sid");
+		SimpleCookie sc = new SimpleCookie("PjDemo.sid");
 		/*
 		 * 如果设置为true，则客户端不会暴露给客户端脚本代码，使用HttpOnly cookie有助于减少某些类型的跨站点脚本攻击；
 		 * 此特性需要实现了Servlet 2.5 MR6及以上版本的规范的Servlet容器支持

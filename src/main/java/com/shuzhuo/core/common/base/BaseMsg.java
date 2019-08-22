@@ -6,8 +6,8 @@ import com.shuzhuo.core.common.enm.ResultCode;
 
 /**
  * 返回数据
- * 
- * @author chenshuzhuo buguangyi
+ *
+ * @author chenshuzhuo
  *
  */
 public class BaseMsg extends HashMap<String, Object> {
@@ -33,7 +33,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回成功状态
-	 * 
+	 *
 	 * @return
 	 */
 	public static BaseMsg success() {
@@ -42,7 +42,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回失败状态
-	 * 
+	 *
 	 * @return
 	 */
 	public static BaseMsg error() {
@@ -51,7 +51,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回成功消息
-	 * 
+	 *
 	 * @param msg
 	 * @return
 	 */
@@ -61,7 +61,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回失败消息
-	 * 
+	 *
 	 * @param msg
 	 * @return
 	 */
@@ -71,7 +71,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回成功对象
-	 * 
+	 *
 	 * @param obj
 	 * @return
 	 */
@@ -81,7 +81,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回失败对像
-	 * 
+	 *
 	 * @param obj
 	 * @return
 	 */
@@ -91,7 +91,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回自定义消息
-	 * 
+	 *
 	 * @param code
 	 *            枚举对象
 	 * @return
@@ -103,7 +103,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回自定义消息
-	 * 
+	 *
 	 * @param code
 	 *            枚举对象
 	 * @param msg
@@ -117,7 +117,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回自定义消息
-	 * 
+	 *
 	 * @param code
 	 *            枚举对象
 	 * @param data
@@ -130,7 +130,7 @@ public class BaseMsg extends HashMap<String, Object> {
 
 	/**
 	 * 返回自定义消息
-	 * 
+	 *
 	 * @param code
 	 *            枚举对象
 	 * @param msg

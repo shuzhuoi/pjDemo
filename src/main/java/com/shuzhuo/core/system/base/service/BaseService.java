@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @author bgy
+ * @author
  */
 @Transactional(readOnly = true)
 public abstract class BaseService {

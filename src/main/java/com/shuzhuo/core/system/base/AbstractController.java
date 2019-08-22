@@ -22,18 +22,13 @@ import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
 
-/**
- * Controller公共组件
- * 
- * @author bgy
- * @date 2017年11月17日
- */
+
 public abstract class AbstractController {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
     private RoleMapper roleMapper;
-	
+
 	protected User getUser() {
 		User user = (User) SecurityUtils.getSubject().getPrincipal();
 		if(user!=null){
@@ -53,13 +48,13 @@ public abstract class AbstractController {
 	protected Long getHospitalId() {
 		return getUser().getOrgHospitalId();
 	}
-	
+
 	//查询
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void buildSearch(HttpServletRequest request,Wrapper wrapper) {
         String jsonStr = request.getParameter("search");
         if(StringUtils.isNotBlank(jsonStr)){
-        	JSONArray array = JSONArray.fromObject(jsonStr);        	
+        	JSONArray array = JSONArray.fromObject(jsonStr);
         	List<SearchEntity> lists = JSONArray.toList(array, new SearchEntity(), new JsonConfig());
         	if(lists!=null&&lists.size()>0){
         		for(SearchEntity search:lists){
@@ -90,7 +85,7 @@ public abstract class AbstractController {
         	}
         }
     }
-	
+
 	//分页
     @SuppressWarnings("rawtypes")
 	protected Page buildPage(HttpServletRequest request) {
@@ -111,20 +106,20 @@ public abstract class AbstractController {
         return page;
 
     }
-    
+
 	//排序
     protected void buildOrder(HttpServletRequest request,@SuppressWarnings("rawtypes") Wrapper wrapper) {
         String orderField = request.getParameter("orderField");
         String order = request.getParameter("order");
         if (StringUtils.isNotBlank(orderField)) {
-        	
+
         	String field = StringUtil.camelToUnderline(orderField);
-        	
+
         	wrapper.orderBy(SQLFilter.sqlInject(field), StringUtils.isNotBlank(order) && "desc".equals(order) ? false : true);
         } else {
         	wrapper.orderBy("create_time",false);
         }
 
     }
-	
+
 }

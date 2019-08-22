@@ -25,9 +25,7 @@ import com.baomidou.mybatisplus.toolkit.StringUtils;
 import com.baomidou.mybatisplus.toolkit.TableInfoHelper;
 import com.shuzhuo.core.common.shiro.ShiroUserUtil;
 
-/**
- * Created by navi on 17/2/15.
- */
+
 public class CrudService<M extends BaseMapper<T>, T> extends BaseService{
     private static final Log logger = LogFactory.getLog(CrudService.class);
     @Autowired

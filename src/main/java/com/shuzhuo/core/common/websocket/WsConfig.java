@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
- * 
+ *
  * @author chenshuzhuo
  * @since 2017-12-25
  *
@@ -14,12 +14,12 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 @Configuration
 @Profile("dev")
 public class WsConfig {
-	
+
 	@Bean
-    public ServerEndpointExporter serverEndpointExporter() {  
-        return new ServerEndpointExporter();  
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
     }
-	
-	
+
+
 }
 

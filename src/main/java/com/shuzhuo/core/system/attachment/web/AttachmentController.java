@@ -111,7 +111,7 @@ public class AttachmentController extends AbstractController {
 				} else {
 					fileName = realFileName;
 				}
-				
+
 				if (logger.isInfoEnabled())
 					logger.info("开始上传文件{}", fileName);
 				BaseMsg baseMsg = attachmentService.saveFile(file,classifyUuid, fileName, remark);
@@ -306,7 +306,7 @@ public class AttachmentController extends AbstractController {
 		Page<Attachment> selectPage = attachmentService.selectPage(currentPage, wrapper);
 		return new BasePageDataDTO<Attachment>(selectPage.getRecords(), selectPage.getTotal());
 	}
-	
+
 
 	@ApiOperation(value = "根据id获取信息")
 	@GetMapping("/getInfo")
@@ -317,7 +317,7 @@ public class AttachmentController extends AbstractController {
 		Attachment attachment = attachmentService.selectById(id);
 		return BaseMsg.successData(attachment);
 	}
-	
+
 	@ApiOperation(value = "根据id删除信息")
 	@GetMapping("/del")
 	@ApiImplicitParams({
@@ -327,10 +327,10 @@ public class AttachmentController extends AbstractController {
 		if(attachmentService.deleteById(id))
 			return BaseMsg.successMsg("删除成功!");
 		return BaseMsg.errorMsg("删除失败!");
-		
+
 	}
-	
-	
+
+
 	@ApiOperation(value = "Baidu WebUploader上传大文件接口")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "groupUuid", value = "分组uuid", paramType = "query",dataType="string"),
@@ -342,14 +342,14 @@ public class AttachmentController extends AbstractController {
 		if(multipartFile.isEmpty()){
 			return BaseMsg.error();
 		}
-		
+
 		String filePath=AttachmentUtils.getBigFilePath(bean.getName())+File.separator+bean.getFileMd5()+File.separator;
 		File saveFile = new File(filePath);
 		if(!saveFile.exists()){
 			saveFile.mkdirs();
 		}
 		saveFile=new File(filePath+File.separator+bean.getChunk());
-		
+
 		try {
 			multipartFile.transferTo(saveFile);
 			return BaseMsg.success();
@@ -358,7 +358,7 @@ public class AttachmentController extends AbstractController {
 		}
 		return BaseMsg.error();
 	}
-	
+
 	@ApiOperation(value = "Baidu WebUploader上传大文件检查接口")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")})
@@ -376,7 +376,7 @@ public class AttachmentController extends AbstractController {
 		}
 		return BaseMsg.error();
 	}
-	
+
 	@ApiOperation(value = "Baidu WebUploader上传大文件处理接口")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "token", dataType = "String",paramType="header")})
@@ -388,7 +388,7 @@ public class AttachmentController extends AbstractController {
 		String savePath=AttachmentUtils.getBigFilePath(bean.getName())+File.separator+bean.getFileMd5();
 		File tempFile = new File(savePath);
 		File outputFile = new File(savePath+AttachmentUtils.getFileDotSuffix(bean.getName()));
-		
+
 		boolean flag=false;
 		if(tempFile.exists()){
 			if(tempFile.listFiles().length==0){
@@ -414,13 +414,13 @@ public class AttachmentController extends AbstractController {
 		}
 		attachment.setGroupUuid(groupUuid);
 		attachment.setRemark(bean.getRemark());
-		
+
 		if(!attachmentService.insert(attachment)){
 			if (logger.isInfoEnabled())
 				logger.warn("保存数据库失败:{}",attachment);
 			return BaseMsg.errorMsg("保存失败!");
 		}
-		
+
 		if(flag){
 			 if (logger.isInfoEnabled())
 					logger.info("秒传文件:{} 完成:"+savePath, bean.getName());
@@ -443,9 +443,9 @@ public class AttachmentController extends AbstractController {
 					return -1;
 				return 1;
 			}
-				
+
 		});
-		
+
 		FileInputStream fis=null;
 		FileChannel inChannel=null;
 		FileChannel outChannel=null;
@@ -464,7 +464,7 @@ public class AttachmentController extends AbstractController {
 	         }
 	         if (logger.isInfoEnabled())
 					logger.info("上传文件:{} 完成", bean.getName());
-	         
+
 	         if(tempFile.isDirectory() && tempFile.exists()){
 	        	 tempFile.delete();
 	         }
@@ -495,13 +495,13 @@ public class AttachmentController extends AbstractController {
 				} catch (IOException e) {
 				}
 			}
-			
+
 		}
-		
+
 		return BaseMsg.successData(attachment);
-		
+
 	}
-	
+
 	//TODO 待修改多线程下载
 	@GetMapping("/downBigFile")
 	@ApiOperation(value = "临时下载大文件接口")
@@ -565,6 +565,6 @@ public class AttachmentController extends AbstractController {
 		return BaseMsg.success();
 	}
 
-	
+
 
 }

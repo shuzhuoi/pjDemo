@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-/**
- * Created by ganxf on 2017/10/31.
- */
+
 public class AttachmentConstant {
 
 
@@ -30,5 +28,5 @@ public class AttachmentConstant {
         mediaTypeMapper.put(".html", MediaType.TEXT_HTML_VALUE);
         mediaTypeMapper.put(".xml", MediaType.TEXT_XML_VALUE);
     }
-   
+
 }
