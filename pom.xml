@@ -29,7 +29,7 @@
 		<webVersion>3.1</webVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<shiro.version>1.4.0</shiro.version>
+		<shiro.version>1.6.0</shiro.version>
 		<mybatisplus-boot.version>1.0.4</mybatisplus-boot.version>
 		<mybatisplus.version>2.1.3</mybatisplus.version>
 		<druid.version>1.1.4</druid.version>
